@@ -1,3 +1,5 @@
+image: fragoi/bash-git:1
+
 stages:
   - listenv
 
