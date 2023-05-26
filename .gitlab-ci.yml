@@ -8,3 +8,4 @@ listenv-job:
   script:
     - bash --version
     - git --version
+    - echo $BASH
