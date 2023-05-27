@@ -1,3 +1,9 @@
+hello-world (0.1.1) unstable; urgency=medium
+
+  * Fix install and license
+
+ -- Fra Goi <fragoidev@gmail.com>  Sat, 27 May 2023 14:04:31 +0000
+
 hello-world (0.1.0) unstable; urgency=medium
 
   * Initial release

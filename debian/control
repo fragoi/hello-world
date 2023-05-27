@@ -8,5 +8,5 @@ Build-Depends: debhelper (>= 12), meson (>= 0.53)
 Package: hello-world
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Hello World
+Description: Say hello to the world
  Gently say Hello World
