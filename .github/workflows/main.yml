@@ -14,6 +14,7 @@ env:
   DEBCHANGELOG: y
   DEBFULLNAME: Fra Goi
   DEBEMAIL: fragoidev@gmail.com
+  DEBDIST: focal
 
 jobs:
 
