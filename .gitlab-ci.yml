@@ -9,3 +9,5 @@ listenv-job:
     - bash --version
     - git --version
     - echo $BASH
+    - pwd
+    - ls -1 /

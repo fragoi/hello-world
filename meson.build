@@ -1,2 +1,2 @@
-project('hello-world', 'cpp', version: '0.1.0')
+project('hello-world', 'cpp', version: files('version'))
 executable('hello-world', 'hello-world.cpp')
