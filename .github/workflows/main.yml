@@ -56,5 +56,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.DEB_TOKEN }}
         run: |
           repositoryDispatch fragoi/hello-world-deb \
-            -f event_type=new_upstream_version
+            -f event_type=new_upstream_version \
             -f client_payload[upstream_version]="$VERSION"
