@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
 
 permissions:
   contents: write
@@ -16,13 +18,18 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.exportVersion.outputs.version }}
     steps:
       - uses: actions/checkout@v3
       - uses: fragoi/bash-actions@main
       - name: Create release
         run: |
-          source bash-functions
           createRelease
+      - name: Export version
+        id: exportVersion
+        run: |
+          output version=$(getVersion)
 
   merge-to-dev:
     needs: [release]
@@ -35,5 +42,19 @@ jobs:
       - uses: fragoi/bash-actions@main
       - name: Update dev branch
         run: |
-          source bash-functions
           updateDev main
+
+  notify-deb:
+    needs: [release]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: fragoi/bash-actions@main
+      - name: Notify debian repository
+        env:
+          VERSION: ${{ needs.release.outputs.version }}
+          GITHUB_TOKEN: ${{ secrets.DEB_TOKEN }}
+        run: |
+          repositoryDispatch fragoi/hello-world-deb \
+            -f event_type=new_upstream_version \
+            -f client_payload[upstream_version]="$VERSION"
