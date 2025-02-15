@@ -19,7 +19,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.exportVersion.outputs.version }}
+      new_version: ${{ steps.exportVersion.outputs.NEW_VERSION }}
     steps:
       - uses: actions/checkout@v3
       - uses: fragoi/bash-actions@main
@@ -29,7 +29,7 @@ jobs:
       - name: Export version
         id: exportVersion
         run: |
-          output version=$(getVersion)
+          outputSharedVars NEW_VERSION
 
   merge-to-dev:
     needs: [release]
@@ -48,13 +48,14 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     continue-on-error: true
+    if: ${{ needs.release.outputs.new_version }}
     steps:
       - uses: fragoi/bash-actions@main
       - name: Notify debian repository
         env:
-          VERSION: ${{ needs.release.outputs.version }}
+          NEW_VERSION: ${{ needs.release.outputs.new_version }}
           GITHUB_TOKEN: ${{ secrets.DEB_TOKEN }}
         run: |
           repositoryDispatch fragoi/hello-world-deb \
             -f event_type=new_upstream_version \
-            -f client_payload[upstream_version]="$VERSION"
+            -f client_payload[upstream_version]="$NEW_VERSION"
