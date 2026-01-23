@@ -19,7 +19,7 @@ jobs:
     outputs:
       new_version: ${{ steps.exportVersion.outputs.NEW_VERSION }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - uses: fragoi/bash-actions@main
       - name: Create release
         env:
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           ref: dev
       - uses: fragoi/bash-actions@main
